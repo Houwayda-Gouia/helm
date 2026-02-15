@@ -1,0 +1,102 @@
+nameOverride: ""
+fullnameOverride: ""
+imagesPullSecret: ""
+imagesPullPolicy: Always
+namespace: first-app
+
+frontend:
+  enabled: true
+  image:
+    repository: lugar2020/angular-frontend
+    tag: "latest"
+  containerPort: 80
+  replicaCount: 1
+  podAnnotations: {}
+  resources: {}
+    # requests:
+    #   cpu: "1m"
+    #   memory: "10Mi"
+    # limits:
+    #   cpu: "2m"
+    #   memory: "20Mi"
+  env: {}
+  service:
+    type: ClusterIP
+    port: 80
+
+core:
+  enabled: true
+  image:
+    repository: lugar2020/spring-backend
+    tag: "latest"
+  containerPort: 9090
+  replicaCount: 1
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  podAnnotations: {}
+  # resources: {}
+  #   requests:
+  #     cpu: "2m"
+  #     memory: "100Mi"
+  #   limits:
+  #     cpu: "3m"
+  #     memory: "150Mi"
+ 
+  env:
+    - name: SERVER_PORT
+      value: "9090"
+    - name: SPRING_DATASOURCE_URL
+      value: "jdbc:mysql://first-app-mysql:3306/first_app?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+    - name: SPRING_DATASOURCE_USERNAME
+      value: "first_app"
+    - name: SPRING_DATASOURCE_PASSWORD
+      value: "rootpassword"
+    - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+      value: "update"
+    - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+      value: "org.hibernate.dialect.MySQL8Dialect"
+  service:
+    type: ClusterIP
+    port: 80
+
+mysql:
+  enabled: true
+  useStatefulSet: true
+  auth:
+    rootUser: root
+    enabled: true
+    rootPassword: "rootpassword"
+  resources:
+    requests:
+      cpu: "5m"
+      memory: "400Mi"
+    limits:
+      cpu: "7m"
+      memory: "500Mi"
+  persistence:
+    size: 1Gi
+  initdbScriptsConfigMap: mysql-configmap
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# resourceQuota:
+#   enabled: true
+#   spec:
+#     hard:
+#       requests.cpu: "10m"
+#       requests.memory: "510Mi"
+#       limits.cpu: "12m"
+#       limits.memory: "670Mi"

@@ -1,0 +1,22 @@
+{{- if  .Values.mysql.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-configmap
+data:
+  init.sql: |-
+    SET GLOBAL event_scheduler = ON;
+    CREATE DATABASE IF NOT EXISTS `first_app` 
+    CHARACTER SET utf8mb4   
+    COLLATE utf8mb4_unicode_ci;
+    CREATE USER IF NOT EXISTS 'first_app'@'%' IDENTIFIED BY 'rootpassword';
+    GRANT ALL PRIVILEGES ON first_app.* TO 'first_app'@'%';
+    FLUSH PRIVILEGES;
+    use first_app;
+
+    
+    
+{{- end }}
+
+#CREATE USER 'rbacuser'@'localhost' IDENTIFIED BY 'rbacuser' ;
+#GRANT ALL PRIVILEGES ON DATABASE rbaccore.* TO 'rbacuser'@'localhost';1?*xQSTR!@@

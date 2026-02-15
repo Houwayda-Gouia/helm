@@ -1,0 +1,61 @@
+{{- if  .Values.core.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-core
+  labels:
+    {{- include "core.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.core.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "core.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.core.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "core.selectorLabels" . | nindent 8 }}
+        date: "{{ now | unixEpoch }}"
+    spec:
+      {{- with .Values.imagesPullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-core
+          image: "{{ .Values.core.image.repository }}:{{ .Values.core.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagesPullPolicy }}
+          {{- if .Values.core.persistence.enabled }}
+          volumeMounts:
+          - mountPath: {{ .Values.core.persistence.imagesPath }}
+            name: imagefolder
+          {{- end }}
+          env:          
+            {{- range .Values.core.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+            {{- end }}
+          ports:
+            - containerPort: 30007
+          livenessProbe:
+            exec:
+              command:
+              - touch
+              - /tmp/healthy
+          readinessProbe:
+            exec:
+              command:
+              - touch
+              - /tmp/healthy
+          resources:
+            {{- toYaml .Values.core.resources | nindent 12 }}
+      {{- if .Values.core.persistence.enabled }}
+      volumes:
+      - name: imagefolder
+        persistentVolumeClaim:
+          claimName: xhourmate-core-imagefolder
+      {{- end -}}
+  {{- end }}
