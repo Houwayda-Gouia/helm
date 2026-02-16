@@ -8,7 +8,7 @@ frontend:
   enabled: true
   image:
     repository: lugar2020/angular-frontend
-    tag: "latest"
+tag: 988cab2f3c0640755b913080549ccb13b3e04e7c "latest"
   containerPort: 80
   replicaCount: 1
   podAnnotations: {}
