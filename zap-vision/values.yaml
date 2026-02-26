@@ -7,7 +7,7 @@ frontend:
   enabled: true
   image:
     repository: houwayda999/zap-vision
-    tag: bd6865e204707af9902109cd6913e38b11cbf432
+    tag: 7426d3731cb4869aab53ff0c83b24811ff2e6abc
   containerPort: 80
   replicaCount: 1
   podAnnotations: {}
