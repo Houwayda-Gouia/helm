@@ -95,3 +95,7 @@ ingress:
 #       requests.memory: "510Mi"
 #       limits.cpu: "12m"
 #       limits.memory: "670Mi"
+
+dev:
+  image:
+    tag: d6df6e3a4a6feb9839326e7b32b536c2f218caec
