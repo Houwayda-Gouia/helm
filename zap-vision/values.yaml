@@ -87,8 +87,7 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-image:
-  tag: 74e67cee8c649aa0b9bde658b2b3dccfd7885842
+
 # resourceQuota:
 #   enabled: true
 #   spec:
