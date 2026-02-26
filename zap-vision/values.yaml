@@ -3,7 +3,6 @@ fullnameOverride: ""
 imagesPullSecret: ""
 imagesPullPolicy: Always
 namespace: first-app
-
 frontend:
   enabled: true
   image:
@@ -13,17 +12,16 @@ frontend:
   replicaCount: 1
   podAnnotations: {}
   resources: {}
-    # requests:
-    #   cpu: "1m"
-    #   memory: "10Mi"
-    # limits:
-    #   cpu: "2m"
-    #   memory: "20Mi"
+  # requests:
+  #   cpu: "1m"
+  #   memory: "10Mi"
+  # limits:
+  #   cpu: "2m"
+  #   memory: "20Mi"
   env: {}
   service:
     type: ClusterIP
     port: 80
-
 core:
   enabled: true
   image:
@@ -43,7 +41,7 @@ core:
   #   limits:
   #     cpu: "3m"
   #     memory: "150Mi"
- 
+
   env:
     - name: SERVER_PORT
       value: "9090"
@@ -60,7 +58,6 @@ core:
   service:
     type: ClusterIP
     port: 80
-
 mysql:
   enabled: true
   useStatefulSet: true
@@ -78,20 +75,20 @@ mysql:
   persistence:
     size: 1Gi
   initdbScriptsConfigMap: mysql-configmap
-
 ingress:
   enabled: false
   className: ""
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-
+image:
+  tag: 74e67cee8c649aa0b9bde658b2b3dccfd7885842
 # resourceQuota:
 #   enabled: true
 #   spec:
