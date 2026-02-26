@@ -96,4 +96,6 @@ ingress:
 #       limits.cpu: "12m"
 #       limits.memory: "670Mi"
 
-
+dev:
+  image:
+    tag: 8c661969d45d4ac9adad629ccb7003719fcc976d
