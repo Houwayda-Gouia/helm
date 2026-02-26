@@ -7,7 +7,7 @@ namespace: first-app
 frontend:
   enabled: true
   image:
-    repository: lugar2020/angular-frontend
+    repository: houwayda999/zap-vision
     tag: e656a206ff62c1bdbb9fdab1e3a79321a614cc80
   containerPort: 80
   replicaCount: 1
