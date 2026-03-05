@@ -26,7 +26,7 @@ core:
   enabled: true
   image:
     repository: lugar2020/spring-backend
-    tag: ac9ef9e9db192194a25bf9dfc91d9dd408e7e4a7
+    tag: 9ddc35f5a3c8a97f58437cf6405162998ea4e5eb
   containerPort: 9090
   replicaCount: 1
   persistence:
